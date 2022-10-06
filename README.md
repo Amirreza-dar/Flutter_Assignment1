@@ -20,3 +20,4 @@ Pressing button will lunch a the url and redirect to WebPage that contains the J
 - ##### Advanced
 if a joke value is too long, ***SingleChildScrollView*** widget is used to make the home page scrolable. Also ***SwipeTo*** widget is used to add Swiping feature to the app. Swiping to right or left will make an action and by calling **setState()** a new joke card will be retrieved.
 
+
