@@ -9,7 +9,7 @@ When the application is opened for the first time, A joke is being presented. Sw
 - ##### Code:
 The whole application is consist of are 3 *** .dart *** files. the purpose of separating code to 3 different files is to make the code more clean and abstract for the sake of understaing . ***main..dart*** is responsible for the Ui of the application. The Card.dart is contains classes (Widgets) and methods related to Tinder card and also footer of the application. The ***Get_Class.dart*** file contains the Serializer model which is being used to fetch the data from given API.
 
-***Click*** [HERE APK] (https://drive.google.com/file/d/1zeZlNtD-0LNcX-kKYBZgdyGS_sywgDYO/view?usp=sharing)
+***Click*** [HERE APK](https://drive.google.com/file/d/1zeZlNtD-0LNcX-kKYBZgdyGS_sywgDYO/view?usp=sharing)
 
 
 "category" (1) , "value"(2) and "url"(3) fields are refered in UI respectively as it shown in figure below:
