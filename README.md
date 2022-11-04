@@ -17,7 +17,7 @@ This is the home page of the application:
 
 Pressing button will lunch a the url and redirect to WebPage that contains the Joke(1) shown in figure below:
 
-![Website](Screens/img2.png)
+![Website](Screens/img3.png)
 
 
 
