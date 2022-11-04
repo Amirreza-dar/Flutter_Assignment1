@@ -1,42 +1,38 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
+import 'package:provider/provider.dart';
+import 'package:test1/logic.dart';
 import 'dart:convert' as cnv;
 import 'Get_class.dart';
 import 'Card.dart';
+import 'Data.dart' as Data;
+import 'package:swipe_to/swipe_to.dart';
 
-void main() => runApp(MyApp());
 
-class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
 
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      home: _MyHomeScreen(),
-    );
-  }
-}
-
-class _MyHomeScreen extends StatefulWidget {
-  const _MyHomeScreen();
+class MyHomeScreen extends StatefulWidget {
+  const MyHomeScreen();
 
   @override
-  State<_MyHomeScreen> createState() => _MyHomeScreenState();
+  State<MyHomeScreen> createState() => MyHomeScreenState();
 }
 
-class _MyHomeScreenState extends State<_MyHomeScreen> {
-  Serializer? model;
+class MyHomeScreenState extends State<MyHomeScreen> {
+  // Serializer? model;
 
   @override
   void initState() {
-    getData();
+    Provider.of<Logic>(context, listen: false).initiate();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    final double height = MediaQuery.of(context).size.height;
+    final double height = MediaQuery
+        .of(context)
+        .size
+        .height;
 
     return Scaffold(
         backgroundColor: Colors.white,
@@ -46,7 +42,7 @@ class _MyHomeScreenState extends State<_MyHomeScreen> {
               children: [
                 Container(
                   // :
-                  height: 230,
+                  height: 360,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.only(
                       bottomRight: Radius.circular(50),
@@ -58,7 +54,7 @@ class _MyHomeScreenState extends State<_MyHomeScreen> {
                         blurRadius: 40.0,
                         spreadRadius: 4.0,
                         offset:
-                            Offset(0, 20.0), // shadow direction: bottom right
+                        Offset(0, 20.0), // shadow direction: bottom right
                       )
                     ],
                   ),
@@ -77,7 +73,8 @@ class _MyHomeScreenState extends State<_MyHomeScreen> {
                                 topRight: Radius.circular(50),
                               ),
                             ),
-                          )),
+                          )
+                      ),
                       Positioned(
                           top: 110,
                           left: 20,
@@ -86,17 +83,67 @@ class _MyHomeScreenState extends State<_MyHomeScreen> {
                                 fontSize: 30,
                                 color: Color(0xFF363f93),
                                 fontWeight: FontWeight.bold,
-                              )))
+                              )
+                          )
+                      ),
+                      Positioned(
+                        top: 210,
+                        right: 0,
+                        child: Container(
+                          height: 80,
+                          width: 200,
+                          // color: Colors.white,
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.only(
+                              bottomLeft: Radius.circular(50),
+                              topLeft: Radius.circular(50),
+                            ),
+                          ),
+
+                          child: MaterialButton(
+                            onPressed: () =>
+                            {
+                              Navigator.push(context,
+                                  MaterialPageRoute(
+                                      builder: (context) => SecondPage()))
+                            },
+                            elevation: 15,
+                            color: Colors.white,
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.only(
+                                  bottomLeft: Radius.circular(50),
+                                  topLeft: Radius.circular(50),
+                                )
+                            ),
+                            child: Text(
+                              'Favorites',
+                              style: TextStyle(
+                                fontSize: 20,
+                                color: Color(0xFF363f93),
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                        ),
+
+                      ),
                     ],
                   ),
                 ),
                 SizedBox(
                   height: height * 0.05,
                 ),
-                JokeCard(),
+                JokeCard(true, Provider
+                    .of<Logic>(context)
+                    .CJ
+                    .value),
                 SizedBox(
                   height: height * 0.01,
                 ),
+                // MaterialButton(
+                //     onPressed:
+                // )
                 FooterWidget(),
                 SizedBox(height: 30),
               ],
@@ -104,12 +151,182 @@ class _MyHomeScreenState extends State<_MyHomeScreen> {
           ),
         ));
   }
+}
 
-  Future<void> getData() async {
-    Uri url = Uri.parse('https://api.chucknorris.io/jokes/random');
-    http.Response res = await http.get(url);
-    dynamic body = cnv.jsonDecode(res.body);
-    model = Serializer.fromJson(body);
-    setState(() {});
+
+
+
+class SecondPage extends StatefulWidget {
+  const SecondPage({Key? key}) : super(key: key);
+
+  @override
+  State<SecondPage> createState() => _SecondPageState();
+}
+
+class _SecondPageState extends State<SecondPage> {
+
+  @override
+  Widget build(BuildContext context) {
+    // Set<String?> Favorite_jokes = Provider.of<Logic>(context).CJ.Favs;
+    // final List<String?> JokeList = Favorite_jokes.toList();
+    return Scaffold(
+        backgroundColor: Colors.white,
+      body: SingleChildScrollView(
+      child: Column(
+        children: [
+          // AppBar(
+          //   title: Text('kiki')
+          // ),
+          Header(),
+          SizedBox(
+            height: 30,
+          ),
+          FavJokeModel(),
+          SizedBox(
+            height: 30,
+          ),
+        ],
+      ),
+    )
+    );
   }
 }
+
+
+class FavJokeModel extends StatefulWidget {
+  const FavJokeModel({Key? key}) : super(key: key);
+
+  @override
+  State<FavJokeModel> createState() => _FavJokeModelState();
+}
+
+class _FavJokeModelState extends State<FavJokeModel> {
+  @override
+  Widget build(BuildContext context) {
+
+    Set<String?> Favorite_jokes = Provider.of<Logic>(context).CJ.Favs;
+    final List<String?> JokeList = Favorite_jokes.toList();
+
+    return ListView.builder(
+            scrollDirection: Axis.vertical,
+            shrinkWrap: true,
+            itemCount: JokeList.length,
+            itemBuilder: (_, int index){
+              return ListTile(
+                title: Text(JokeList[index]?? 'Not Found!'),
+              );
+            }
+          );
+
+
+
+  }
+}
+
+
+class Header extends StatefulWidget {
+  const Header({Key? key}) : super(key: key);
+
+  @override
+  State<Header> createState() => _HeaderState();
+}
+
+class _HeaderState extends State<Header> {
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+    children: [
+    Container(
+    // :
+    height: 360,
+    decoration: BoxDecoration(
+    borderRadius: BorderRadius.only(
+    bottomRight: Radius.circular(50),
+    ),
+    color: Color(0xFF363f93),
+    boxShadow: [
+    BoxShadow(
+    color: Colors.black45,
+    blurRadius: 40.0,
+    spreadRadius: 4.0,
+    offset:
+    Offset(0, 20.0), // shadow direction: bottom right
+    )
+    ],
+    ),
+    child: Stack(
+    children: [
+    Positioned(
+    top: 80,
+    left: 0,
+    child: Container(
+    height: 100,
+    width: 300,
+    decoration: BoxDecoration(
+    color: Colors.white,
+    borderRadius: BorderRadius.only(
+    bottomRight: Radius.circular(50),
+    topRight: Radius.circular(50),
+    ),
+    ),
+    )
+    ),
+    Positioned(
+    top: 110,
+    left: 20,
+    child: Text('Chuck Norris',
+    style: TextStyle(
+    fontSize: 30,
+    color: Color(0xFF363f93),
+    fontWeight: FontWeight.bold,
+    )
+    )
+    ),
+    Positioned(
+    top: 210,
+    right: 0,
+    child: Container(
+    height: 80,
+    width: 200,
+    // color: Colors.white,
+    decoration: BoxDecoration(
+    color: Colors.white,
+    borderRadius: BorderRadius.only(
+    bottomLeft: Radius.circular(50),
+    topLeft: Radius.circular(50),
+    ),
+    ),
+
+    child: MaterialButton(
+    onPressed: () => {
+      Navigator.pop(context)
+    },
+    elevation: 15,
+    color: Colors.white,
+    shape: RoundedRectangleBorder(
+    borderRadius: BorderRadius.only(
+    bottomLeft: Radius.circular(50),
+    topLeft: Radius.circular(50),
+    )
+    ),
+    child: Text(
+    'HomePage',
+    style: TextStyle(
+    fontSize: 20,
+    color: Color(0xFF363f93),
+    fontWeight: FontWeight.bold,
+    ),
+    ),
+    ),
+    ),
+
+    ),
+    ],
+    ),
+    ),
+    ],
+    );
+  }
+}
+
+
