@@ -22,21 +22,6 @@ void main(){
   });
 
 }
-// class WholeJokeModel extends ChangeNotifier{
-//
-//   final
-//   List<WholeJokeModel> Favorites =
-//
-// }
-//
-// class JokeAPI{
-//   late final FavouritesJokes favourites_model;
-//   late final CurrentJoke current_joke;
-//
-//   JokeAPI({required FavouritesJokes, required CurrentJoke});
-//
-//
-// }
 
 class CurrentJoke{
 
@@ -82,17 +67,6 @@ class CurrentJoke{
 
 
 
-// class FavouritesJokes{
-//
-//   Set<CurrentJoke> Favourites = {};
-//
-//   void add(CurrentJoke value){
-//     Favourites.add(value);
-//   }
-//
-// }
-
-
 class Serializer {
   List<String>? categories;
   String? id;
@@ -121,34 +95,7 @@ class Serializer {
 }
 
 
-// class RandomJokeRequest{
-//
-//   dynamic fetched_joke;
-//   // late final Serializer Y;
-//   // var X;
-//
-//    RandomJokeRequest(){
-//      print('hello RandomJokeRequest');
-//      fetched_joke = getData();
-//      // fetched_joke = X;
-//
-//     }
-//    Future getData() async {
-//     Uri url = Uri.parse('https://api.chucknorris.io/jokes/random');
-//     http.Response res = await http.get(url);
-//     dynamic body = cnv.jsonDecode(res.body);
-//     // print(Serializer.fromJson(body));
-//     print('Hello from getData');
-//     return Serializer.fromJson(body);
-//
-//     // setState(() {});
-//   }
-//     // dynamic GetJoke(){
-//     //
-//     // }
-//
-//
-// }
+
 
 
 

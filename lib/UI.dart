@@ -1,15 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
 import 'package:test1/logic.dart';
-import 'dart:convert' as cnv;
-import 'Get_class.dart';
 import 'Card.dart';
-import 'Data.dart' as Data;
-import 'package:swipe_to/swipe_to.dart';
-
-
 
 class MyHomeScreen extends StatefulWidget {
   const MyHomeScreen();
@@ -167,8 +160,6 @@ class _SecondPageState extends State<SecondPage> {
 
   @override
   Widget build(BuildContext context) {
-    // Set<String?> Favorite_jokes = Provider.of<Logic>(context).CJ.Favs;
-    // final List<String?> JokeList = Favorite_jokes.toList();
     return Scaffold(
         backgroundColor: Colors.white,
       body: SingleChildScrollView(

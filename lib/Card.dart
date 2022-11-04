@@ -1,22 +1,14 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
 import 'package:test1/Data.dart';
-import 'dart:convert' as cnv;
-import 'Get_class.dart';
 import 'package:swipe_to/swipe_to.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:provider/provider.dart';
-import 'main.dart';
 import 'logic.dart';
-import 'package:provider/provider.dart';
 
 class JokeCard extends StatefulWidget {
 
   JokeCard(value, joke){
     second_page = value;
-    // Joke = Joke;
   }
   late final bool second_page;
   late final String? Joke;
@@ -25,20 +17,14 @@ class JokeCard extends StatefulWidget {
 }
 
 class _JokeCardState extends State<JokeCard> {
-  // Serializer? model;
-  // String? _id;
   @override
   void initState() {
-    // getData();
-    // _id = model?.id ?? '0';
+
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    // List<String> _title = model?.categories ?? ['Undefined'];
-    // String? _Text = model?.value ?? 'Undefined';
-    // String? _url = model?.url ?? 'https://api.chucknorris.io';
     widget.Joke = Provider.of<Logic>(context).CJ.value;
 
     return SwipeTo(
@@ -60,11 +46,8 @@ class _JokeCardState extends State<JokeCard> {
                 ),
               ],
             ),
-            child: false
-                ? Center(
-                    child: CircularProgressIndicator(),
-                  )
-                : Container(
+            child:
+                 Container(
                     margin: const EdgeInsets.all(5),
                     padding: const EdgeInsets.all(5),
                     decoration: BoxDecoration(
@@ -107,29 +90,21 @@ class _JokeCardState extends State<JokeCard> {
         onRightSwipe: () {
           setState(() {
             Provider.of<Logic>(context, listen: false).initiate();
-            // getData();
-            // _id = model?.id ?? '0';
+
           });
         },
         onLeftSwipe: () {
           setState(() {
             setState(() {
               Provider.of<Logic>(context, listen: false).initiate();
-              // getData();
-              // _id = model?.id ?? '0';
+
             });
           });
         }
         );
   }
 
-  // Future<void> getData() async {
-  //   Uri url = Uri.parse('https://api.chucknorris.io/jokes/random');
-  //   http.Response res = await http.get(url);
-  //   dynamic body = cnv.jsonDecode(res.body);
-  //   model = Serializer.fromJson(body);
-  //   setState(() {});
-  // }
+
 }
 
 
@@ -248,10 +223,7 @@ class FavJokeCard extends StatelessWidget {
             ),
           ],
         ),
-        child: false
-            ? Center(
-          child: CircularProgressIndicator(),
-        )
+        child
             : Container(
             margin: const EdgeInsets.all(5),
             padding: const EdgeInsets.all(5),
